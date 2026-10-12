@@ -1,0 +1,138 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ULA na DE2-115</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@400;500;600;700;800&family=Share+Tech+Mono&family=VT323&display=swap">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/board.css">
+<link rel="stylesheet" href="css/panels.css">
+
+<!-- Brilho dos segmentos acesos -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="segGlow" x="-80%" y="-40%" width="260%" height="180%">
+      <feGaussianBlur stdDeviation="2.3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<header class="intro">
+  <h1>ULA de 16 bits <span>· DE2-115</span></h1>
+  <p>Ligue a placa em <b>POWER</b>, escolha ULACtl em SW17–15 e monte A e B nas chaves. Displays, LEDs e LCD respondem na hora.</p>
+</header>
+
+<!-- ============ PLACA ============ -->
+<section class="board is-off" id="board" aria-label="Placa DE2-115 simulada">
+  <span class="hole h-tl" aria-hidden="true"></span><span class="hole h-tr" aria-hidden="true"></span>
+  <span class="hole h-bl" aria-hidden="true"></span><span class="hole h-br" aria-hidden="true"></span>
+
+  <div class="b-top">
+    <div class="pwr">
+      <div class="dcjack" aria-hidden="true"><span></span></div>
+      <div class="comp">
+        <button class="key pwr-btn" id="power" type="button" aria-pressed="false" aria-label="Botão de energia: ligar a placa"><span class="cap"></span></button>
+        <span class="silk lbl">Power</span>
+      </div>
+      <div class="comp" style="padding-bottom:3px">
+        <span class="led b" id="pwrLed"></span>
+        <span class="silk lbl">PWR</span>
+      </div>
+    </div>
+
+    <div class="brand">
+      <div class="brand-row silk"><span>Altera</span><span class="sep"></span><span>Terasic</span></div>
+      <div class="model silk">DE2-115</div>
+      <div class="tag silk">Development &amp; Education Board</div>
+    </div>
+
+    <div class="ports" aria-hidden="true">
+      <div class="comp"><span class="vga"></span><span class="silk lbl">VGA</span></div>
+      <div class="comp"><span class="rj45"><i></i><i></i></span><span class="silk lbl">Ethernet</span></div>
+      <div class="comp"><span class="usb"></span><span class="silk lbl">Blaster</span></div>
+      <div class="comp"><span class="audio"><i></i><i></i><i></i></span><span class="silk lbl">Audio</span></div>
+    </div>
+  </div>
+
+  <div class="b-mid">
+    <div class="comp">
+      <div class="chip" aria-hidden="true">
+        <span class="pin1"></span>
+        <span class="chip-fam">CYCLONE IV E</span>
+        <span class="chip-pn">EP4CE115F29C7N</span>
+        <span class="chip-lot">114 480 LEs</span>
+      </div>
+      <span class="silk lbl">U1 · FPGA</span>
+    </div>
+
+    <div class="comp">
+      <div class="lcd" id="lcd"><div class="lcd-glass" id="lcdGlass" aria-hidden="true"></div></div>
+      <span class="silk lbl">LCD 16×2</span>
+    </div>
+
+    <div class="optable silk" aria-label="Tabela de operações da ULA">
+      <div class="ot-title">ULACtl = SW[17:15]</div>
+      <div class="ot-cols">
+        <div id="otCol0"></div>
+        <div id="otCol1"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="b-io">
+    <div class="hex-block"><div class="hex-grid" id="hexGrid"></div></div>
+    <div class="ledg-block"><div class="ledg-grid" id="ledgGrid"></div></div>
+    <div class="sw-block" id="swBlock">
+      <div class="sw-legend silk" aria-hidden="true"><span>1</span><span>0</span></div>
+    </div>
+    <div class="key-block">
+      <div class="grp top silk" style="max-width:284px">KEY[3:0] · ativo em 0</div>
+      <div class="keys" id="keys"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAINÉIS ============ -->
+<div class="below">
+  <section class="panel probe" id="probe" aria-labelledby="probeTitle">
+    <div class="panel-head">
+      <h2 id="probeTitle">Sonda lógica</h2>
+      <span class="status" id="probeStatus">sem energia</span>
+    </div>
+    <div class="bus" id="bus">
+      <div class="bus-h"><span></span><span>b15 … b0</span><span>Hex</span><span>Sem sinal</span><span>Com sinal</span></div>
+    </div>
+    <p class="bus-note" id="busNote"></p>
+    <div class="opline"><span class="opm" id="probeOp">—</span><span class="opf" id="probeFx"></span></div>
+    <div class="flags" id="probeFlags"></div>
+    <p class="explain" id="ex1"></p>
+    <p class="explain" id="ex2"></p>
+    <p class="explain" id="ex3"></p>
+  </section>
+
+  <section class="panel guide" aria-labelledby="guideTitle">
+    <div class="panel-head"><h2 id="guideTitle">Mapa de E/S</h2></div>
+    <dl class="map">
+      <div><dt>SW17–SW15</dt><dd>ULACtl, os 3 bits da operação.</dd></div>
+      <div><dt>SW14</dt><dd>Extensão de A e B: 0 = extensão de sinal, 1 = bits altos, com A[6:0] em A[15:9]. LEDG8 acende no modo bits altos.</dd></div>
+      <div><dt>SW13–SW7</dt><dd>A[6:0].</dd></div>
+      <div><dt>SW6–SW0</dt><dd>B[6:0].</dd></div>
+      <div><dt>HEX7–4</dt><dd>Valor das chaves de A e de B, em hex.</dd></div>
+      <div><dt>HEX3–0</dt><dd>R completo, 16 bits em hexadecimal.</dd></div>
+      <div><dt>LEDG3–0</dt><dd>Negativo, Cout, Overflow e Zero.</dd></div>
+      <div><dt>KEY3 / KEY2</dt><dd>Segure para ver A ou B já com 16 bits em HEX3–0.</dd></div>
+      <div><dt>KEY1</dt><dd>Segure para ver R em decimal com sinal em HEX7–0.</dd></div>
+      <div><dt>KEY0</dt><dd>Segure para o teste de lâmpadas.</dd></div>
+      <div><dt>LEDR17–0</dt><dd>Repetem o estado de cada chave.</dd></div>
+    </dl>
+    <p class="note">Com extensão de sinal, A e B ficam entre −64 e 63 e a soma nunca estoura. Ligue SW14 para ver Overflow. Na subtração, Cout = 1 quando não há empréstimo (A ≥ B sem sinal). SLT compara com sinal; SLL desloca A por B[3:0].</p>
+  </section>
+</div>
+
+<!-- Ordem importa: lógica → desenho → painel → controle -->
+<script src="js/ula.js"></script>
+<script src="js/seg7.js"></script>
+<script src="js/board.js"></script>
+<script src="js/probe.js"></script>
+<script src="js/main.js"></script>

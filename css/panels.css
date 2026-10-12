@@ -1,0 +1,53 @@
+/* panels.css — painéis abaixo da placa: sonda lógica e mapa de E/S. */
+.below { max-width: 1120px; margin: 26px auto 0; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 18px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding-block: 18px 20px; padding-inline: 20px; min-width: 0; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.panel h2 { margin: 0; font-weight: 700; font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--fg); }
+
+/* sonda lógica */
+.status { font-family: var(--f-data); font-size: .75rem; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+.probe.live .status { color: var(--led-g); }
+.probe.live .status::before { background: var(--led-g); box-shadow: 0 0 6px var(--led-g); }
+
+.bus { font-family: var(--f-data); font-variant-numeric: tabular-nums; overflow-x: auto; padding-bottom: 2px; }
+.bus-h, .bus-r { display: grid; grid-template-columns: 18px 252px 60px 50px 60px; align-items: center; gap: 10px; min-width: max-content; }
+.bus-h { font-family: var(--f-silk); font-size: .62rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-bottom: 6px; }
+.bus-h span:nth-child(n+3), .bus-r .v { text-align: right; }
+.bus-r { padding-block: 5px; font-size: .92rem; }
+.bus-r.res { border-top: 1px solid var(--line); margin-top: 3px; padding-top: 8px; }
+.bn { font-family: var(--f-silk); font-weight: 700; color: var(--fg); }
+.bits { display: flex; gap: 1px; }
+.bits i { font-style: normal; width: 14px; text-align: center; border-radius: 2px; color: #5d6268; background: #1e2226; font-size: .85rem; }
+.bits i.one { color: #ffd9d2; background: #5a1d17; }
+.bits i.ext { opacity: .5; }
+.bits i:nth-child(4n):not(:last-child) { margin-right: 4px; }
+.bus-note { margin: 6px 0 0; font-size: .78rem; color: var(--muted); }
+.v { color: var(--fg); }
+
+.opline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 14px; }
+.opm { font-family: var(--f-data); font-size: 1.05rem; color: var(--accent); }
+.opf { font-family: var(--f-data); font-size: .9rem; color: var(--muted); }
+.flags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.flag { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 9px; border-radius: 999px; border: 1px solid var(--line); font-family: var(--f-data); font-size: .85rem; color: var(--muted); }
+.flag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--led-g-off); }
+.flag.on { border-color: rgba(86, 255, 138, .45); color: var(--fg); }
+.flag.on::before { background: var(--led-g); box-shadow: 0 0 6px var(--led-g); }
+.explain { margin: 12px 0 0; font-size: .92rem; line-height: 1.5; color: var(--fg); max-width: 66ch; }
+.explain + .explain { margin-top: 4px; color: var(--muted); }
+.explain:empty { display: none; }
+
+/* mapa de E/S */
+.map { margin: 0; display: grid; gap: 8px; }
+.map div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.map dt { font-family: var(--f-data); font-size: .85rem; color: var(--accent); }
+.map dd { margin: 0; font-size: .9rem; color: var(--fg); }
+.note { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: .88rem; color: var(--muted); max-width: 66ch; }
+.note + .note { border-top: 0; padding-top: 0; margin-top: 8px; }
+
+@media (max-width: 980px) {
+  .below { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 420px) {
+  .map div { grid-template-columns: 82px minmax(0, 1fr); }
+}

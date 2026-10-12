@@ -1,0 +1,55 @@
+/* base.css — tokens de cor e fonte, página e cabeçalho.
+   Layout: a placa fica centrada sobre a "bancada"; os painéis vêm logo abaixo. */
+:root {
+  color-scheme: dark;
+  --bench: #0e1012;
+  --bench-glow: #1d2126;
+  --pcb: #3a3f45;
+  --pcb-hi: #4c525a;
+  --pcb-lo: #272a2f;
+  --silk: #e9ece5;
+  --silk-dim: rgba(233, 236, 229, .42);
+  --seg-on: #ff3522;
+  --seg-off: #2a100e;
+  --led-r: #ff3b2d;
+  --led-r-off: #4a1c18;
+  --led-g: #56ff8a;
+  --led-g-off: #173a25;
+  --led-b: #5ab8ff;
+  --led-b-off: #1a2c3d;
+  --lcd-bg: #a8c13e;
+  --lcd-bg-off: #262d21;
+  --lcd-ink: #1b2907;
+  --panel: #171a1e;
+  --line: #2a2f35;
+  --fg: #dfe2dc;
+  --muted: #8d9399;
+  --accent: #ff6a4d;
+  --f-silk: "Saira Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-lcd: "VT323", "Courier New", monospace;
+  --f-data: "Share Tech Mono", ui-monospace, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bench); }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 640px at 50% -12%, var(--bench-glow), transparent 70%), var(--bench);
+  color: var(--fg);
+  font: 400 15px/1.5 var(--f-silk);
+  padding-inline: 16px;
+  padding-block: 22px 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--led-b); outline-offset: 3px; }
+
+.intro { max-width: 1120px; margin: 0 auto 18px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; }
+.intro h1 { margin: 0; font-weight: 700; font-size: 1.05rem; letter-spacing: .06em; text-transform: uppercase; color: var(--fg); }
+.intro h1 span { color: var(--muted); font-weight: 500; }
+.intro p { margin: 0; color: var(--muted); max-width: 62ch; font-size: .95rem; }
+.intro b { color: var(--fg); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
